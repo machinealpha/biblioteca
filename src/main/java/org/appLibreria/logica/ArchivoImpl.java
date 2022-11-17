@@ -45,7 +45,7 @@ public class ArchivoImpl {
   }
 
   private static List<Usuario> getRecordFromLineUsuario(String line, List<Usuario> usuarios) {
-    String[] split = line.split(";");
+    String[] split = line.split(COMMA_DELIMITER);
     if (Objects.nonNull(split[4]) && !split[4].isBlank()) {
       usuarios.add(
           new Docente(
@@ -58,7 +58,7 @@ public class ArchivoImpl {
   }
 
   private static List<Libro> getRecordFromLineLibro(String line, List<Libro> libros) {
-    String[] split = line.split(";");
+    String[] split = line.split(COMMA_DELIMITER);
     libros.add(
         new Libro(
             split[0],
