@@ -1,5 +1,7 @@
 package org.appLibreria.dominio;
 
+import java.util.List;
+
 public class Libro {
   private String ISBN;
   private String titulo;
@@ -91,5 +93,34 @@ public class Libro {
         + ", cantidadDisponiblePrestamo="
         + cantidadDisponiblePrestamo
         + '}';
+  }
+
+  public static Libro crearLibro(Libro libro, List<Libro> libros) {
+    if (validarIsbn(libro.getISBN(), libros)) {
+      throw new IllegalArgumentException(
+          String.format("Libro ya existe con ISBN %s", libro.getISBN()));
+    }
+    if (validarCantidadLibroBiblioteca(libro.getCantidadTotalBiblioteca())) {
+      throw new IllegalArgumentException("La cantidad total de libros debe ser mayor a 0");
+    }
+    if (validarCantidadLibroDisponible(
+        libro.getCantidadDisponiblePrestamo(), libro.getCantidadTotalBiblioteca())) {
+      throw new IllegalArgumentException(
+          "La cantidad de libros disponibles para prestamo debe ser menor o igual a la cantidad total de libros y mayor a 0");
+    }
+    libros.add(libro);
+    return libro;
+  }
+
+  public static boolean validarIsbn(String isbn, List<Libro> libros) {
+    return libros.stream().anyMatch(libro -> libro.getISBN().equals(isbn));
+  }
+
+  public static boolean validarCantidadLibroBiblioteca(int caLibrosBiblio) {
+    return caLibrosBiblio > 0;
+  }
+
+  public static boolean validarCantidadLibroDisponible(int caLibrosDisp, int caLibrosBiblio) {
+    return caLibrosDisp > 0 && caLibrosDisp <= caLibrosBiblio;
   }
 }

@@ -22,7 +22,7 @@ public class ArchivoImpl {
       // se remueve el titulo
       scanner.nextLine();
       while (scanner.hasNextLine()) {
-        getRecordFromLineLibro(scanner.nextLine(), libros).forEach(System.out::println);
+        getRecordFromLineLibro(scanner.nextLine(), libros);
       }
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("El archivo no existe.");
@@ -36,7 +36,7 @@ public class ArchivoImpl {
       // se remueve el titulo
       scanner.nextLine();
       while (scanner.hasNextLine()) {
-        getRecordFromLineUsuario(scanner.nextLine(), usuarios).forEach(System.out::println);
+        getRecordFromLineUsuario(scanner.nextLine(), usuarios);
       }
     } catch (FileNotFoundException e) {
       throw new IllegalArgumentException("El archivo no existe.");
