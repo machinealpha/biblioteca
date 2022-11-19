@@ -7,6 +7,8 @@ import org.appLibreria.dominio.Usuario;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +17,8 @@ import java.util.Scanner;
 public class ArchivoImpl {
 
   private static final String COMMA_DELIMITER = ";";
+  private static final String ENCABEZADO_LIBRO=
+          "ISBN;titulo;autor;cantidad_biblioteca;cantidad_disponible;imagen";
 
   public static List<Libro> leerLibro(String nombreArchivo) {
     List<Libro> libros = new ArrayList<>();
@@ -69,5 +73,18 @@ public class ArchivoImpl {
             split[5]));
 
     return libros;
+  }
+
+  public static void guardarLibros(List<Libro> libros, String libroFilename){
+    try(FileWriter fileWriter = new FileWriter(libroFilename)){
+      fileWriter.write(ENCABEZADO_LIBRO+ "\n");
+      for (Libro libro : libros) {
+        fileWriter.write(libro.toCsv());
+      }
+      fileWriter.flush();
+    } catch (IOException e) {
+      System.err.println(e);
+      throw new RuntimeException(e);
+    }
   }
 }
