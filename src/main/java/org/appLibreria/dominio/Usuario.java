@@ -61,4 +61,14 @@ public abstract class Usuario {
         + prestamo
         + '}';
   }
+  
+  //Se agrego para complementar Borrar Usuarios (faltan unos atributos que aparecen en el csv como "Profesion, Grado y Carrera")
+   public String toCSV() {
+        // AGREGAR LOS ATRIBUTOS ADICIONALES SEPARADOS POR ;
+        // 1-1;Tomás S;1
+        
+        return getNombre() + ";" +getRut() + ";" +  getGenero() + ";" + getPrestamo();
+    }   
+
+  
 }
