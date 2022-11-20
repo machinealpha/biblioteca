@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ArchivoImpl {
 
@@ -87,4 +88,31 @@ public class ArchivoImpl {
       throw new RuntimeException(e);
     }
   }
+  
+    //Agrege metodo borrar usuarios
+    public static void borrarUsuario(String nombreArchivo, String rut ) throws FileNotFoundException, IOException {
+        // carga lista actual usuarios
+        List<Usuario> usuarios = ArchivoImpl.leerUsuario(nombreArchivo);
+        // filtra lista actual de usuarios respecto a rut y crea lista filtrada
+        List<Usuario> usuariosFilter = usuarios.stream().filter(u -> rut.equals(u.getRut())).collect(Collectors.toList());
+        if (!usuariosFilter.isEmpty()) {
+           System.out.println("el usuario existe");
+           FileWriter archivoEscritura = new FileWriter(nombreArchivo);
+           archivoEscritura.write("nombre_completo;run;genero;prestamo;profesion;grado;carrera" + "\n");
+            for (int i = 0; i < usuarios.size(); i++) {
+                // OBRTENEMOS EL FORMATO CSV
+                String linea = usuarios.get(i).toCSV();
+                System.out.println(linea);
+                String [] array = linea.split(";");
+                if (array[1].equals(rut)) {
+                    System.out.println(array[2] + " borrar");
+                } else {
+                    // ESCRIBIMOS EN EL ARCHIVO
+                    archivoEscritura.write(linea + "\n");
+                }
+            }
+        // CERRAMOS EL ARCHIVO
+        archivoEscritura.close();
+        }
+    }   
 }

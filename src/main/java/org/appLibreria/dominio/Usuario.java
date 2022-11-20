@@ -64,6 +64,18 @@ public abstract class Usuario {
         + '}';
   }
 
+  
+  //Se agrego para complementar Borrar Usuarios (faltan unos atributos que aparecen en el csv como "Profesion, Grado y Carrera")
+   public String toCSV() {
+        // AGREGAR LOS ATRIBUTOS ADICIONALES SEPARADOS POR ;
+        // 1-1;Tomás S;1
+        
+        return getNombre() + ";" +getRut() + ";" +  getGenero() + ";" + getPrestamo();
+    }   
+
+  
+
+
   public static Usuario validarRun(String rut, List<Usuario> usuarios) {
     return usuarios.stream().filter(x -> x.getRut().equals(rut)).findFirst().orElse(null);
   }
@@ -71,4 +83,5 @@ public abstract class Usuario {
   public static boolean habilitadoPrestamo(Usuario usr){
     return usr.getPrestamo().equals("0");
   }
+
 }
