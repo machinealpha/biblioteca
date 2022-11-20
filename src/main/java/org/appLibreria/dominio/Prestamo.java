@@ -123,9 +123,7 @@ public class Prestamo {
       String ISBN,
       String rut,
       List<Libro> libros,
-      List<Usuario> usuarios,
-      int diasPrestamo,
-      int idPrestamo) {
+      List<Usuario> usuarios) {
     // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCARLIBRO
     if (!Libro.validarIsbn(ISBN, libros)) {
       throw new IllegalArgumentException("El libro a buscar no existe.");
