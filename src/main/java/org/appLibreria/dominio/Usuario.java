@@ -1,16 +1,18 @@
 package org.appLibreria.dominio;
 
+import java.util.List;
+
 public abstract class Usuario {
   private String nombre;
   private String rut;
-  private String genero;
-  private int prestamo;
+  private char genero;
+  private String prestamo;
 
-  public Usuario(String nombre, String rut, String genero, int prestamo) {
-    this.nombre = nombre;
-    this.rut = rut;
-    this.genero = genero;
-    this.prestamo = prestamo;
+  public Usuario(String nombre, String rut, char genero, String prestamo) {
+    setNombre(nombre);
+    setRut(rut);
+    setGenero(genero);
+    setPrestamo(prestamo);
   }
 
   public String getNombre() {
@@ -29,19 +31,19 @@ public abstract class Usuario {
     this.rut = rut;
   }
 
-  public String getGenero() {
+  public char getGenero() {
     return genero;
   }
 
-  public void setGenero(String genero) {
+  public void setGenero(char genero) {
     this.genero = genero;
   }
 
-  public int getPrestamo() {
+  public String getPrestamo() {
     return prestamo;
   }
 
-  public void setPrestamo(int prestamo) {
+  public void setPrestamo(String prestamo) {
     this.prestamo = prestamo;
   }
 
@@ -60,5 +62,13 @@ public abstract class Usuario {
         + ", prestamo="
         + prestamo
         + '}';
+  }
+
+  public static Usuario validarRun(String rut, List<Usuario> usuarios) {
+    return usuarios.stream().filter(x -> x.getRut().equals(rut)).findFirst().orElse(null);
+  }
+
+  public static boolean habilitadoPrestamo(Usuario usr){
+    return usr.getPrestamo().equals("0");
   }
 }
