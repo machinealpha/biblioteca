@@ -4,7 +4,7 @@ public class Docente extends Usuario{
     private String profesion;
     private String grados;
 
-    public Docente(String nombre, String rut, String genero, int prestamo, String profesion, String grados) {
+    public Docente(String nombre, String rut, char genero, String prestamo, String profesion, String grados) {
         super(nombre, rut, genero, prestamo);
         this.profesion = profesion;
         this.grados = grados;

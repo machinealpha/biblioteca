@@ -116,6 +116,10 @@ public class Libro {
     return libros.stream().anyMatch(libro -> libro.getISBN().equals(isbn));
   }
 
+  public static Libro obtenerLibro(String isbn, List<Libro> libros) {
+    return libros.stream().filter(libro -> libro.getISBN().equals(isbn)).findFirst().orElse(null);
+  }
+
   public static boolean validarCantidadLibroBiblioteca(int caLibrosBiblio) {
     return caLibrosBiblio > 0;
   }
@@ -124,25 +128,33 @@ public class Libro {
     return caLibrosDisp > 0 && caLibrosDisp <= caLibrosBiblio;
   }
 
-  public static boolean eliminarLibro(String isbn, List<Libro> libros){
-    if(validarIsbn(isbn,libros)){
+  public static boolean eliminarLibro(String isbn, List<Libro> libros) {
+    if (validarIsbn(isbn, libros)) {
       libros.removeIf(x -> x.getISBN().equals(isbn));
       return true;
     }
     throw new IllegalArgumentException(
-            String.format("El libro con ISBN %s no se encuentra registrado",isbn));
+        String.format("El libro con ISBN %s no se encuentra registrado", isbn));
   }
 
-  public String toCsv(){
+  public void quitarDisponibilidad(){
+    this.setCantidadDisponiblePrestamo(this.getCantidadDisponiblePrestamo() - 1);
+  }
+
+  public void sumarDisponibilidad(){
+    this.setCantidadDisponiblePrestamo(this.getCantidadDisponiblePrestamo() + 1);
+  }
+
+  public String toCsv() {
     return """
             %s;%s;%s;%d;%d;%s
-            """.formatted(
-                    this.getISBN(),
+            """
+        .formatted(
+            this.getISBN(),
             this.getTitulo(),
             this.getAutor(),
             this.getCantidadTotalBiblioteca(),
             this.getCantidadDisponiblePrestamo(),
-            this.getImagen()
-    );
+            this.getImagen());
   }
 }

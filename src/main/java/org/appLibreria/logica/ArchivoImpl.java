@@ -53,7 +53,7 @@ public class ArchivoImpl {
     if (Objects.nonNull(split[4]) && !split[4].isBlank()) {
       usuarios.add(
           new Docente(
-              split[0], split[1], split[2], Integer.parseInt(split[3]), split[4], split[5]));
+              split[0], split[1], String.split[2], Integer.parseInt(split[3]), split[4], split[5]));
     } else {
       usuarios.add(
           new Estudiante(split[0], split[1], split[2], split[6], Integer.parseInt(split[3])));
