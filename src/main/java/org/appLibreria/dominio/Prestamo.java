@@ -5,8 +5,6 @@
 package org.appLibreria.dominio;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +13,13 @@ import java.util.List;
 public class Prestamo {
   private Usuario usuario;
   private Libro libro;
-  private LocalDate fecha;
+  private LocalDate fechaPrestamo;
   private Devolucion devolucion;
-  private int diasPrestamo;
-  private int idPrestamo;
 
-  public Prestamo(Usuario usuario, Libro libro, int diasPrestamo, int idPrestamo) {
+  public Prestamo(Usuario usuario, Libro libro) {
     this.setUsuario(usuario);
     this.setLibro(libro);
-    this.setFecha(LocalDate.now());
+    this.setFechaPrestamo(LocalDate.now());
     this.inicializarDevolucion();
   }
 
@@ -58,15 +54,15 @@ public class Prestamo {
   /**
    * @return the fecha
    */
-  public LocalDate getFecha() {
-    return fecha;
+  public LocalDate getFechaPrestamo() {
+    return fechaPrestamo;
   }
 
   /**
-   * @param fecha the fecha to set
+   * @param fechaPrestamo the fecha to set
    */
-  public void setFecha(LocalDate fecha) {
-    this.fecha = fecha;
+  public void setFechaPrestamo(LocalDate fechaPrestamo) {
+    this.fechaPrestamo = fechaPrestamo;
   }
 
   /**
@@ -83,41 +79,13 @@ public class Prestamo {
     this.devolucion = devolucion;
   }
 
-  /**
-   * @return the diasPrestamo
-   */
-  public int getDiasPrestamo() {
-    return diasPrestamo;
-  }
-
-  /**
-   * @param diasPrestamo the diasPrestamo to set
-   */
-  public void setDiasPrestamo(int diasPrestamo) {
-    this.diasPrestamo = diasPrestamo;
-  }
-
-  /**
-   * @return the idPrestamo
-   */
-  public int getIdPrestamo() {
-    return idPrestamo;
-  }
-
-  /**
-   * @param idPrestamo the idPrestamo to set
-   */
-  public void setIdPrestamo(int idPrestamo) {
-    this.idPrestamo = idPrestamo;
-  }
-
   private void inicializarDevolucion() {
     Devolucion devolucion = null;
     if (this.getUsuario() instanceof Docente) {
-      this.getFecha().plusDays(20L);
-      devolucion = new Devolucion(this.getFecha().plusDays(20L));
+      this.getFechaPrestamo().plusDays(20L);
+      devolucion = new Devolucion(this.getFechaPrestamo().plusDays(20L));
     } else {
-      devolucion = new Devolucion(this.getFecha().plusDays(10L));
+      devolucion = new Devolucion(this.getFechaPrestamo().plusDays(10L));
     }
     setDevolucion(devolucion);
   }
@@ -188,7 +156,7 @@ public class Prestamo {
     // UNAS VEZ GENERADA TODAS LAS VALIDACIONES
 
     // GENERAMOS UNA INSTANCIA DE PRÉSTAMO
-    Prestamo prestamo = new Prestamo(usuario, libro, diasPrestamo, idPrestamo);
+    Prestamo prestamo = new Prestamo(usuario, libro);
     prestamo.tarjetaPrestamo();
     return prestamo;
   }
@@ -205,7 +173,7 @@ public class Prestamo {
             this.getUsuario().getNombre(),
             this.getLibro().getISBN(),
             this.getLibro().getTitulo(),
-            this.getFecha(),
+            this.getFechaPrestamo(),
             this.getDevolucion().getFechaEntrega());
   }
 }
