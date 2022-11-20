@@ -17,8 +17,10 @@ import java.util.Scanner;
 public class ArchivoImpl {
 
   private static final String COMMA_DELIMITER = ";";
-  private static final String ENCABEZADO_LIBRO=
-          "ISBN;titulo;autor;cantidad_biblioteca;cantidad_disponible;imagen";
+  private static final String ENCABEZADO_LIBRO =
+      "ISBN;titulo;autor;cantidad_biblioteca;cantidad_disponible;imagen";
+  private static final String ENCABEZADO_USUARIO =
+      "nombre_completo;run;genero;prestamo;profesion;grado;carrera";
 
   public static List<Libro> leerLibro(String nombreArchivo) {
     List<Libro> libros = new ArrayList<>();
@@ -52,11 +54,9 @@ public class ArchivoImpl {
     String[] split = line.split(COMMA_DELIMITER);
     if (Objects.nonNull(split[4]) && !split[4].isBlank()) {
       usuarios.add(
-          new Docente(
-              split[0], split[1], String.split[2], Integer.parseInt(split[3]), split[4], split[5]));
+          new Docente(split[0], split[1], split[2].charAt(0), split[3], split[4], split[5]));
     } else {
-      usuarios.add(
-          new Estudiante(split[0], split[1], split[2], split[6], Integer.parseInt(split[3])));
+      usuarios.add(new Estudiante(split[0], split[1], split[2].charAt(0), split[6], split[3]));
     }
     return usuarios;
   }
@@ -75,11 +75,24 @@ public class ArchivoImpl {
     return libros;
   }
 
-  public static void guardarLibros(List<Libro> libros, String libroFilename){
-    try(FileWriter fileWriter = new FileWriter(libroFilename)){
-      fileWriter.write(ENCABEZADO_LIBRO+ "\n");
+  public static void guardarLibros(List<Libro> libros, String libroFilename) {
+    try (FileWriter fileWriter = new FileWriter(libroFilename)) {
+      fileWriter.write(ENCABEZADO_LIBRO + "\n");
       for (Libro libro : libros) {
         fileWriter.write(libro.toCsv());
+      }
+      fileWriter.flush();
+    } catch (IOException e) {
+      System.err.println(e);
+      throw new RuntimeException(e);
+    }
+  }
+
+  public static void guardarUsuarios(List<Usuario> usuarios, String libroFilename) {
+    try (FileWriter fileWriter = new FileWriter(libroFilename)) {
+      fileWriter.write(ENCABEZADO_USUARIO + "\n");
+      for (Usuario usuario : usuarios) {
+        fileWriter.write(usuario.toCsv());
       }
       fileWriter.flush();
     } catch (IOException e) {

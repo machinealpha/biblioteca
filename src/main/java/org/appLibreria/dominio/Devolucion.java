@@ -22,9 +22,10 @@ public class Devolucion {
   public void retraso(LocalDate fchDevolucionReal) {
     if (fchDevolucionReal.isAfter(this.getFechaEntrega())) {
       long diferenciaEnDias = ChronoUnit.DAYS.between(this.getFechaEntrega(), fchDevolucionReal);
-      System.out.printf(
-              "Multa corresponde a $%o, por los dias de retraso %o%n",
-          (diferenciaEnDias * 1000), diferenciaEnDias);
+      long multa = diferenciaEnDias * 1000;
+      System.out.println(String.format(
+              "Multa corresponde a $%s, por los dias de retraso %s",
+              multa, diferenciaEnDias));
     }
   }
 }

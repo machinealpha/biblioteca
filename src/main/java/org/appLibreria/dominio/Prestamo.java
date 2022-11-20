@@ -103,7 +103,7 @@ public class Prestamo {
       throw new IllegalArgumentException("El libro a buscar no existe.");
     }
     Libro libro = Libro.obtenerLibro(isbn, libros);
-    Usuario usuario = Usuario.validarRun(rut, usuarios);
+    Usuario usuario = Usuario.buscarUsuario(rut, usuarios);
     if (usuario == null) {
       throw new IllegalArgumentException("Usuario no existe");
     }
@@ -136,7 +136,7 @@ public class Prestamo {
 
     // ASIGNO UNA VARIABLE CON VALOR A LO QUE RETORNE EL MÉTODO BUSCARUSUARIO
     // SI EL USUARIO ES NULO, ES PORQUE NO LO HE ENCONTRADO
-    Usuario usuario = Usuario.validarRun(rut, usuarios);
+    Usuario usuario = Usuario.buscarUsuario(rut, usuarios);
     if (usuario == null) {
       throw new IllegalArgumentException("Usuario no existe");
     }
@@ -155,12 +155,13 @@ public class Prestamo {
 
     // GENERAMOS UNA INSTANCIA DE PRÉSTAMO
     Prestamo prestamo = new Prestamo(usuario, libro);
-    prestamo.tarjetaPrestamo();
+    System.out.println(prestamo.tarjetaPrestamo());
     return prestamo;
   }
 
   public String tarjetaPrestamo() {
     return """
+            --- Detalle prestamo ---
             Usuario: %s %s
             Libro: %s %s
             Fecha inicio: %s
@@ -173,5 +174,15 @@ public class Prestamo {
             this.getLibro().getTitulo(),
             this.getFechaPrestamo(),
             this.getDevolucion().getFechaEntrega());
+  }
+
+  @Override
+  public String toString() {
+    return "Prestamo{" +
+            "usuario=" + usuario +
+            ", libro=" + libro +
+            ", fechaPrestamo=" + fechaPrestamo +
+            ", devolucion=" + devolucion +
+            '}';
   }
 }

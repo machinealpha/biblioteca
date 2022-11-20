@@ -6,8 +6,8 @@ public class Docente extends Usuario{
 
     public Docente(String nombre, String rut, char genero, String prestamo, String profesion, String grados) {
         super(nombre, rut, genero, prestamo);
-        this.profesion = profesion;
-        this.grados = grados;
+        this.setProfesion(profesion);
+        this.setGrados(grados);
     }
 
     public String getProfesion() {
