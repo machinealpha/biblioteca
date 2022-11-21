@@ -1,3 +1,4 @@
 nombre_completo;run;genero;prestamo;profesion;grado;carrera
-Juan perez;12345678-9;M;0;;;mecanica
-Juan perez;12345678-9;f;0;Kinesiologa;lincenciada
+Jorge perez;12345678-9;M;0;;;mecanica
+Juan perez;12345678-8;F;0;Kinesiologa;lincenciada;
+Mario;19126702-0;M;0;profesor;master;
